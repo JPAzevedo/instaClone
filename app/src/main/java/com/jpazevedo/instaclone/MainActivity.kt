@@ -16,34 +16,31 @@ class MainActivity : AppCompatActivity() {
     // Check lateinit here: https://www.bignerdranch.com/blog/kotlin-when-to-use-lazy-or-lateinit/
     //private lateinit var message: TextView
 
-    internal var selectedFragement : Fragment? = null
-    internal var frameLayout : Int? = 0
-
-
     // This is a functional interface with only one argument. So, the lambda function can be called this way: interfaceName { arg -> logic of the function }
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {
         item -> when(item.itemId){
             R.id.nav_home -> {
-                selectedFragement = HomeFragment()
+                moveToFragment(HomeFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_search -> {
-                selectedFragement = SearchFragment()
+                moveToFragment(SearchFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post -> {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications -> {
-                selectedFragement = NotificationsFragment()
+                moveToFragment(NotificationsFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                selectedFragement = ProfileFragment()
+                moveToFragment(ProfileFragment())
                 return@OnNavigationItemSelectedListener true
             }
             else -> return@OnNavigationItemSelectedListener false
         }
-        supportFragmentManager.beginTransaction().replace(frameLayout!!,selectedFragement!!).commit()
-        true
+        false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +49,14 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        frameLayout = R.id.fragment_container
-        supportFragmentManager.beginTransaction().replace(frameLayout!!,HomeFragment()).commit()
+        moveToFragment(HomeFragment())
 
+    }
+
+    private fun moveToFragment(fragment: Fragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container,fragment)
+        fragmentTransaction.commit()
     }
 
 }

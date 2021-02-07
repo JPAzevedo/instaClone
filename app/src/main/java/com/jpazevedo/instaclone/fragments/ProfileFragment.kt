@@ -1,10 +1,13 @@
 package com.jpazevedo.instaclone.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.jpazevedo.instaclone.AccountSettingsActivity
 import com.jpazevedo.instaclone.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,7 +38,14 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        val editAccountButton = view.findViewById<Button>(R.id.edit_account_settings_btn)
+
+        editAccountButton.setOnClickListener{
+            startActivity(Intent(context,AccountSettingsActivity::class.java))
+        }
+
+        return view
     }
 
     companion object {
