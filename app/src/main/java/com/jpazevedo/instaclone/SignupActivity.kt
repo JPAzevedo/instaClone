@@ -55,7 +55,6 @@ class SignupActivity : AppCompatActivity() {
                 mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ task ->
                     if(task.isSuccessful){
                         saveUserInfo(fullName,userName,email,progressDialog)
-
                     }
                     else {
                         val message = task.exception!!.toString()
